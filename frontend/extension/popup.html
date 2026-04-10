@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <!-- Animated background grid -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- Floating orbs for ambient glow -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+
+  <div class="popup-wrapper">
+
+    <!-- ── HEADER ────────────────────────────────────────── -->
+    <header class="popup-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z" fill="url(#shield-grad-light)" stroke="url(#shield-stroke-light)" stroke-width="0.8"/>
+            <circle cx="12" cy="12" r="3" fill="none" stroke="#0077e6" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="1" fill="#0077e6"/>
+            <line x1="12" y1="8" x2="12" y2="9.5" stroke="#0077e6" stroke-width="1" stroke-linecap="round"/>
+            <line x1="12" y1="14.5" x2="12" y2="16" stroke="#0077e6" stroke-width="1" stroke-linecap="round"/>
+            <line x1="8" y1="12" x2="9.5" y2="12" stroke="#0077e6" stroke-width="1" stroke-linecap="round"/>
+            <line x1="14.5" y1="12" x2="16" y2="12" stroke="#0077e6" stroke-width="1" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="shield-grad-light" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#eef2ff"/>
+                <stop offset="1" stop-color="#dde4ff"/>
+              </linearGradient>
+              <linearGradient id="shield-stroke-light" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0077e6"/>
+                <stop offset="1" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">PhishGuard</span>
+          <span class="brand-tag">AI</span>
+        </div>
+      </div>
+      <div class="header-status" id="headerStatus">
+        <span class="status-dot active"></span>
+        <span class="status-label">Ready</span>
+      </div>
+    </header>
+
+    <!-- ── URL DISPLAY ──────────────────────────────────── -->
+    <div class="url-card" id="urlCard">
+      <div class="url-card-label">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        Active URL
+      </div>
+      <div class="url-text" id="urlDisplay">Loading current page...</div>
+    </div>
+
+    <!-- ── SCAN BUTTON ─────────────────────────────────── -->
+    <div class="scan-section">
+      <button class="scan-btn" id="scanBtn" aria-label="Scan current website for phishing">
+        <div class="scan-btn-glow" aria-hidden="true"></div>
+        <span class="scan-btn-icon" id="scanIcon">
+          <!-- Radar/scan icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.5"/>
+            <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+            <line x1="12" y1="12" x2="12" y2="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="radar-needle"/>
+          </svg>
+        </span>
+        <span class="scan-btn-text" id="scanText">Scan This Website</span>
+      </button>
+      <p class="scan-hint">Powered by multimodal AI analysis</p>
+    </div>
+
+    <!-- ── RESULT PANEL (hidden initially) ─────────────── -->
+    <div class="result-panel" id="resultPanel" aria-live="polite">
+
+      <!-- Safe result -->
+      <div class="result-card result-safe hidden" id="resultSafe">
+        <div class="result-icon-wrap safe">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="result-info">
+          <div class="result-verdict safe-text">SAFE</div>
+          <div class="result-desc">No phishing signals detected. This site appears legitimate.</div>
+        </div>
+      </div>
+
+      <!-- Phishing result -->
+      <div class="result-card result-danger hidden" id="resultDanger">
+        <div class="result-icon-wrap danger">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div class="result-info">
+          <div class="result-verdict danger-text">PHISHING</div>
+          <div class="result-desc">Phishing signals detected! Avoid entering any credentials.</div>
+        </div>
+      </div>
+
+      <!-- Warning / suspicious -->
+      <div class="result-card result-warning hidden" id="resultWarning">
+        <div class="result-icon-wrap warning">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f4a261" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="result-info">
+          <div class="result-verdict warning-text">SUSPICIOUS</div>
+          <div class="result-desc">Some suspicious patterns found. Proceed with caution.</div>
+        </div>
+      </div>
+
+      <!-- Confidence bar -->
+      <div class="confidence-wrap" id="confidenceWrap">
+        <div class="confidence-label">
+          <span>AI Confidence</span>
+          <span class="confidence-score" id="confidenceScore">—</span>
+        </div>
+        <div class="confidence-bar-track">
+          <div class="confidence-bar-fill" id="confidenceFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Analysis tags -->
+      <div class="analysis-tags" id="analysisTags"></div>
+
+    </div>
+
+    <!-- ── SCANNING OVERLAY ────────────────────────────── -->
+    <div class="scanning-overlay hidden" id="scanningOverlay" aria-busy="true" role="status">
+      <div class="scan-ring">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+        <div class="scan-center-dot"></div>
+      </div>
+      <div class="scanning-text">Analyzing with AI...</div>
+      <div class="scanning-steps">
+        <div class="step" id="step1">
+          <span class="step-dot"></span>Capturing screenshot
+        </div>
+        <div class="step" id="step2">
+          <span class="step-dot"></span>Analyzing URL patterns
+        </div>
+        <div class="step" id="step3">
+          <span class="step-dot"></span>Running multimodal AI
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FOOTER ──────────────────────────────────────── -->
+    <footer class="popup-footer">
+      <span class="footer-label">PhishGuard AI v1.0</span>
+      <a class="footer-link" href="#" id="reportLink">Report False Positive</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
