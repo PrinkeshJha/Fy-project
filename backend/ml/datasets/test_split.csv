@@ -1,0 +1,3 @@
+url_length,dots,hyphens,digits,special_chars,contains_ip,contains_at,https,entropy,subdomains,domain_age,ssl_valid,suspicious_keywords,Label
+18,1,0,0,0,0,0,1,3.0,0,8000,1,0,0
+19,1,0,0,0,1,0,0,2.5,0,-1,0,0,1
