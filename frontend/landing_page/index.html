@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PhishGuard AI — AI-powered phishing website detector using multimodal analysis of URLs and screenshots. Stay safe online with real-time protection." />
+  <title>PhishGuard AI — AI-Powered Phishing Detector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner container">
+      <a href="#" class="nav-brand" id="navBrand">
+        <div class="nav-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z"
+              fill="url(#nl-fill)" stroke="url(#nl-stroke)" stroke-width="0.8"/>
+            <circle cx="12" cy="12" r="3" fill="none" stroke="#0077e6" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="1" fill="#0077e6"/>
+            <defs>
+              <linearGradient id="nl-fill" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#eef2ff"/><stop offset="1" stop-color="#dde4ff"/>
+              </linearGradient>
+              <linearGradient id="nl-stroke" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0077e6"/><stop offset="1" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="nav-brand-name">PhishGuard</span>
+        <span class="nav-brand-tag">AI</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#stats" class="nav-link">Stats</a></li>
+        <li><a href="#download" class="nav-link">Download</a></li>
+      </ul>
+
+      <a href="#download" class="btn btn-primary nav-cta" id="navCta">Add to Chrome — Free</a>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <!-- background decorations -->
+    <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <!-- Left: text -->
+      <div class="hero-content" data-animate="fade-up">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          AI-Powered · Real-Time · Free
+        </div>
+
+        <h1 class="hero-title">
+          Don't Get<br/>
+          <span class="gradient-text">Hooked.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          PhishGuard AI uses multimodal artificial intelligence — analysing both the
+          <strong>URL patterns</strong> and a <strong>visual screenshot</strong> of any website
+          to detect phishing attempts before you fall victim.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary btn-lg" id="heroCta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Add to Chrome — It's Free
+          </a>
+          <a href="#how-it-works" class="btn btn-ghost btn-lg" id="heroLearnMore">
+            See How It Works
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Mini trust badges -->
+        <div class="hero-trust">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            No data stored
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Works on all websites
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Instant AI analysis
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: illustration -->
+      <div class="hero-visual" data-animate="fade-left">
+        <div class="hero-img-wrap">
+          <img
+            src="hero-illustration.png"
+            alt="PhishGuard AI shield scanning a website"
+            class="hero-img"
+            id="heroIllustration"
+          />
+          <!-- Floating status cards -->
+          <div class="float-card float-card-safe" aria-hidden="true">
+            <div class="float-dot safe"></div>
+            <span>SAFE — 97% confidence</span>
+          </div>
+          <div class="float-card float-card-danger" aria-hidden="true">
+            <div class="float-dot danger"></div>
+            <span>PHISHING DETECTED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATS BAR
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="stats-bar" id="stats">
+    <div class="container stats-inner">
+      <div class="stat-item" data-animate="fade-up">
+        <div class="stat-number" id="statThreats">—</div>
+        <div class="stat-label">Threats Blocked</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" data-animate="fade-up" data-delay="100">
+        <div class="stat-number" id="statAccuracy">—</div>
+        <div class="stat-label">Detection Accuracy</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" data-animate="fade-up" data-delay="200">
+        <div class="stat-number" id="statScanTime">—</div>
+        <div class="stat-label">Avg. Scan Time</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" data-animate="fade-up" data-delay="300">
+        <div class="stat-number" id="statUsers">—</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="how-it-works section" id="how-it-works">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-eyebrow">Simple & Seamless</div>
+        <h2 class="section-title">How PhishGuard Works</h2>
+        <p class="section-subtitle">Three steps. Zero effort on your part.</p>
+      </div>
+
+      <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step-card" data-animate="fade-up" data-delay="0">
+          <div class="step-number">01</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <h3 class="step-title">Install the Extension</h3>
+          <p class="step-desc">Add PhishGuard AI to Chrome in one click. No account needed, completely free.</p>
+        </div>
+
+        <!-- Arrow -->
+        <div class="step-arrow" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card" data-animate="fade-up" data-delay="150">
+          <div class="step-number">02</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="step-title">Browse Normally</h3>
+          <p class="step-desc">Visit any website as usual. When you're on a suspicious page, click the PhishGuard icon.</p>
+        </div>
+
+        <!-- Arrow -->
+        <div class="step-arrow" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card" data-animate="fade-up" data-delay="300">
+          <div class="step-number">03</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <h3 class="step-title">Get Instant AI Verdict</h3>
+          <p class="step-desc">Our AI analyses the URL and a screenshot simultaneously and returns a verdict in under 2 seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FEATURES
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="features section" id="features">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-eyebrow">Why PhishGuard</div>
+        <h2 class="section-title">Built Different</h2>
+        <p class="section-subtitle">Most tools only check URLs. We go further.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card feature-card-large" data-animate="fade-up" data-delay="0">
+          <div class="feature-icon-wrap blue">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Multimodal AI Analysis</h3>
+          <p class="feature-desc">Combines URL pattern recognition <em>and</em> visual screenshot analysis using large multimodal models — catching phishing pages that look identical to the real thing.</p>
+          <div class="feature-tag">Unique Approach</div>
+        </div>
+
+        <div class="feature-card" data-animate="fade-up" data-delay="100">
+          <div class="feature-icon-wrap violet">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Real-Time Detection</h3>
+          <p class="feature-desc">Get results in under 2 seconds — fast enough to catch threats before you type a single character.</p>
+        </div>
+
+        <div class="feature-card" data-animate="fade-up" data-delay="200">
+          <div class="feature-icon-wrap green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Confidence Scoring</h3>
+          <p class="feature-desc">Not just Safe/Phishing — get a percentage confidence score so you know how certain the AI is.</p>
+        </div>
+
+        <div class="feature-card" data-animate="fade-up" data-delay="300">
+          <div class="feature-icon-wrap orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Privacy First</h3>
+          <p class="feature-desc">We don't store your browsing history. Screenshots are analysed in-flight and immediately discarded.</p>
+        </div>
+
+        <div class="feature-card" data-animate="fade-up" data-delay="400">
+          <div class="feature-icon-wrap blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Works on All Websites</h3>
+          <p class="feature-desc">Works across banking portals, e-commerce, social media, government sites — anywhere online.</p>
+        </div>
+
+        <div class="feature-card" data-animate="fade-up" data-delay="500">
+          <div class="feature-icon-wrap violet">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Suspicious Pattern Tags</h3>
+          <p class="feature-desc">Detailed analysis tags — URL shortener, login spoof, visual clone, domain mismatch and more signals explained.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EXTENSION PREVIEW (placeholder — replace with your image)
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="preview section" id="preview">
+    <div class="container preview-inner">
+      <div class="preview-content" data-animate="fade-right">
+        <div class="section-eyebrow">See It in Action</div>
+        <h2 class="section-title left">Simple. Powerful.<br/>Right in Your Browser.</h2>
+        <p class="section-subtitle left">
+          The popup lives in your Chrome toolbar. One click — and the AI does all the heavy lifting.
+          No tabs opened, no sign-ups, no friction.
+        </p>
+        <ul class="preview-list">
+          <li>
+            <span class="list-dot"></span>
+            Scan button triggers multimodal AI analysis
+          </li>
+          <li>
+            <span class="list-dot"></span>
+            AI confidence score shown with progress bar
+          </li>
+          <li>
+            <span class="list-dot"></span>
+            Detailed signal tags explain the verdict
+          </li>
+          <li>
+            <span class="list-dot"></span>
+            Results in under 2 seconds
+          </li>
+        </ul>
+      </div>
+
+      <div class="preview-visual" data-animate="fade-left">
+        <!--
+          ↓ Replace src with your actual extension screenshot
+            e.g. src="extension-screenshot.png"
+        -->
+        <div class="extension-mockup" id="extensionMockupWrap">
+          <div class="mockup-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9aa3bf" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p>Extension screenshot goes here</p>
+            <span>Replace src in index.html → #extensionMockupWrap img</span>
+          </div>
+          <!-- Uncomment and set src when you have the image: -->
+          <!-- <img src="extension-screenshot.png" alt="PhishGuard AI Chrome Extension Popup" class="mockup-img" /> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       DOWNLOAD CTA
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="cta-section section" id="download">
+    <div class="cta-orb cta-orb-1" aria-hidden="true"></div>
+    <div class="cta-orb cta-orb-2" aria-hidden="true"></div>
+    <div class="container cta-inner" data-animate="fade-up">
+      <div class="cta-icon-wrap">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z"
+            fill="url(#cta-shield)" stroke="url(#cta-stroke)" stroke-width="0.8"/>
+          <circle cx="12" cy="12" r="3.5" fill="none" stroke="#0077e6" stroke-width="1.5"/>
+          <circle cx="12" cy="12" r="1.2" fill="#0077e6"/>
+          <defs>
+            <linearGradient id="cta-shield" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#eef2ff"/><stop offset="1" stop-color="#dde4ff"/>
+            </linearGradient>
+            <linearGradient id="cta-stroke" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0077e6"/><stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h2 class="cta-title">Start Protecting Yourself Today</h2>
+      <p class="cta-subtitle">
+        Free forever. No account. No tracking. Just AI protection working silently for you.
+      </p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary btn-lg btn-chrome" id="downloadBtn">
+          <!-- Chrome logo -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="4" fill="#0077e6"/>
+            <path d="M12 8h8.93A10 10 0 1 1 7.08 3.93" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+          Add to Chrome — It's Free
+        </a>
+      </div>
+      <p class="cta-note">Compatible with Chrome, Brave, Edge, and all Chromium browsers.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L3 6.5V12c0 4.97 3.79 9.63 9 10.93C17.21 21.63 21 16.97 21 12V6.5L12 2Z"
+              fill="url(#ft-fill)" stroke="url(#ft-stroke)" stroke-width="0.8"/>
+            <circle cx="12" cy="12" r="2.5" fill="none" stroke="#0077e6" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="0.8" fill="#0077e6"/>
+            <defs>
+              <linearGradient id="ft-fill" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#eef2ff"/><stop offset="1" stop-color="#dde4ff"/>
+              </linearGradient>
+              <linearGradient id="ft-stroke" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0077e6"/><stop offset="1" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="footer-brand-name">PhishGuard AI</span>
+      </div>
+      <p class="footer-copy">© 2026 PhishGuard AI. Built for the Final Year Project.</p>
+      <p class="footer-tagline">Protecting users with multimodal AI — one scan at a time.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
