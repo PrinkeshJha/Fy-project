@@ -146,22 +146,18 @@ scanBtn.addEventListener('click', async () => {
     // Animate scan steps concurrently (visual feedback)
     const stepPromise = runScanSteps();
 
-    // ── TODO: Replace this mock with your actual API call ──────────
-    //
-    //   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    //   const screenshot = await chrome.tabs.captureVisibleTab();
-    //   const response   = await fetch('https://your-api.com/analyze', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ url: currentUrl, screenshot })
-    //   });
-    //   const result = await response.json();
-    //
-    // ──────────────────────────────────────────────────────────────
-
-    // ── Mock response for UI demo ──────────────────────────────────
-    const mockResult = await mockApiCall(currentUrl);
-    // ──────────────────────────────────────────────────────────────
+    // Call real backend API
+    const response = await fetch('http://localhost:5000/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: currentUrl })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API returned status: ${response.status}`);
+    }
+    
+    const result = await response.json();
 
     await stepPromise; // wait for steps to finish before showing result
 
@@ -169,16 +165,16 @@ scanBtn.addEventListener('click', async () => {
     scanningOverlay.classList.add('hidden');
 
     // Show result
-    showResult(mockResult.verdict, mockResult.confidence, mockResult.tags);
+    showResult(result.verdict, result.confidence, result.tags);
     setStatus(
-      mockResult.verdict === 'danger' ? 'danger' : mockResult.verdict === 'warning' ? 'warning' : 'safe',
-      mockResult.verdict === 'danger' ? 'Phishing!' : mockResult.verdict === 'warning' ? 'Suspicious' : 'Safe'
+      result.verdict === 'danger' ? 'danger' : result.verdict === 'warning' ? 'warning' : 'safe',
+      result.verdict === 'danger' ? 'Phishing!' : result.verdict === 'warning' ? 'Suspicious' : 'Safe'
     );
 
   } catch (err) {
     console.error('[PhishGuard] Scan error:', err);
     scanningOverlay.classList.add('hidden');
-    setStatus('', 'Error');
+    setStatus('danger', 'Error');
   } finally {
     // Restore button
     scanBtn.disabled = false;
@@ -188,46 +184,3 @@ scanBtn.addEventListener('click', async () => {
   }
 });
 
-// ── Mock API — replace with real backend call ─────────────────────
-async function mockApiCall(url) {
-  // Simulate network latency
-  await delay(2400);
-
-  const u = (url || '').toLowerCase();
-
-  // Very basic heuristic for demo purposes only
-  if (u.includes('paypal-secure') || u.includes('login-verify') || u.includes('bank-alert')) {
-    return {
-      verdict:    'danger',
-      confidence: 94,
-      tags: [
-        { type: 'danger',  label: 'Suspicious Domain' },
-        { type: 'danger',  label: 'Login Spoof' },
-        { type: 'warning', label: 'Visual Clone' },
-        { type: 'neutral', label: 'URL Pattern Match' },
-      ]
-    };
-  }
-
-  if (u.includes('bit.ly') || u.includes('tinyurl') || u.includes('redirect')) {
-    return {
-      verdict:    'warning',
-      confidence: 72,
-      tags: [
-        { type: 'warning', label: 'URL Shortener' },
-        { type: 'warning', label: 'Redirect Chain' },
-        { type: 'neutral', label: 'No HTTPS Risk' },
-      ]
-    };
-  }
-
-  return {
-    verdict:    'safe',
-    confidence: 97,
-    tags: [
-      { type: 'safe',    label: 'Valid HTTPS' },
-      { type: 'safe',    label: 'Trusted Domain' },
-      { type: 'neutral', label: 'No Visual Spoof' },
-    ]
-  };
-}
