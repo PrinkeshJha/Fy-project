@@ -34,6 +34,13 @@ def load_cnn_model():
 # Load model once at module initialization
 load_cnn_model()
 
+def preprocess_image(image_path: str):
+    img = load_img(image_path, target_size=(224, 224))
+    img_array = img_to_array(img)
+    img_array = img_array / 255.0
+    img_batch = np.expand_dims(img_array, axis=0)
+    return img_batch
+
 def predict(image_path: str) -> dict:
     global model
     
@@ -48,15 +55,7 @@ def predict(image_path: str) -> dict:
 
     try:
         # Load and preprocess image to match MobileNetV2 inputs
-        # MobileNetV2 expects 224x224 RGB
-        img = load_img(image_path, target_size=(224, 224))
-        img_array = img_to_array(img)
-        
-        # Normalize pixel values to [0, 1] as typically done for ImageDataGenerator rescale=1./255
-        img_array = img_array / 255.0
-        
-        # Expand dimensions to create a batch of 1
-        img_batch = np.expand_dims(img_array, axis=0)
+        img_batch = preprocess_image(image_path)
         
         # Predict
         predictions = model.predict(img_batch, verbose=0)[0] # softmax returns an array of probabilities

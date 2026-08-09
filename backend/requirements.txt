@@ -12,3 +12,6 @@ playwright
 tensorflow
 Pillow
 numpy
+
+shap
+opencv-python

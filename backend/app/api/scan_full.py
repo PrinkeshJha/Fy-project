@@ -8,6 +8,10 @@ from app.services.url_prediction import get_url_prediction
 from app.services.cnn_prediction import get_cnn_prediction
 from app.services.ensemble_service import ensemble_predict
 from app.services.screenshot_service import capture_screenshot, WebsiteUnreachableError, InvalidURLError
+from app.services.feature_extractor import extract_features
+from explainability.shap_service import explain_features
+from explainability.explanation_formatter import format_shap_explanation
+from explainability.gradcam_service import generate_gradcam
 
 router = APIRouter()
 
@@ -17,6 +21,14 @@ class ScanFullRequest(BaseModel):
 class ModelResult(BaseModel):
     prediction: str
     probability: float
+
+class URLExplanation(BaseModel):
+    method: str
+    top_reasons: List[str]
+
+class VisualExplanation(BaseModel):
+    method: str
+    heatmap_url: str
 
 class ScanFullResponse(BaseModel):
     url: str
@@ -28,6 +40,8 @@ class ScanFullResponse(BaseModel):
     screenshot: Optional[str] = None
     note: Optional[str] = None
     reasons: Optional[List[str]] = None
+    url_explanation: Optional[URLExplanation] = None
+    visual_explanation: Optional[VisualExplanation] = None
 
 @router.post("/scan/full", response_model=ScanFullResponse)
 async def scan_full(request: ScanFullRequest):
@@ -44,8 +58,20 @@ async def scan_full(request: ScanFullRequest):
 
 async def _run_full_pipeline(url: str) -> ScanFullResponse:
     # 1. Evaluate URL model (Random Forest)
+    url_explanation = None
     try:
+        # We extract features directly so we can reuse them for SHAP
+        features, _ = extract_features(url)
         url_result = get_url_prediction(url)
+        
+        # Best-effort SHAP explanation
+        try:
+            shap_res = explain_features(features)
+            top_reasons = format_shap_explanation(shap_res)
+            url_explanation = URLExplanation(method="SHAP", top_reasons=top_reasons)
+        except Exception as e:
+            print(f"SHAP explanation failed: {e}")
+            
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"URL Model evaluation failed: {str(e)}")
 
@@ -69,6 +95,15 @@ async def _run_full_pipeline(url: str) -> ScanFullResponse:
                 "prediction": cnn_pred["prediction"],
                 "probability": cnn_pred["probability"]
             }
+            
+            # Best-effort Grad-CAM explanation
+            try:
+                heatmap_rel = generate_gradcam(abs_screenshot_path)
+                heatmap_url = "/" + heatmap_rel.replace("\\", "/")
+                visual_explanation = VisualExplanation(method="Grad-CAM", heatmap_url=heatmap_url)
+            except Exception as e:
+                print(f"Grad-CAM explanation failed: {e}")
+                
         except Exception as e:
             note = f"Visual analysis failed: {str(e)}"
             
@@ -102,5 +137,7 @@ async def _run_full_pipeline(url: str) -> ScanFullResponse:
         ) if cnn_result else None,
         screenshot=screenshot_path,
         note=note,
-        reasons=url_result.get("reasons", [])
+        reasons=url_result.get("reasons", []),
+        url_explanation=url_explanation,
+        visual_explanation=visual_explanation if 'visual_explanation' in locals() else None
     )
