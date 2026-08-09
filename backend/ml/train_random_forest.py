@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Paths
 ML_DIR = Path(__file__).parent
-DATASET_PATH = ML_DIR / "datasets" / "synthetic_phishing_data.csv"
+DATASET_PATH = ML_DIR.parent / "dataset" / "dataset_full.csv"
 MODEL_PATH = ML_DIR / "url_model.pkl"
 FEATURE_NAMES_PATH = ML_DIR / "feature_names.json"
 
@@ -24,12 +24,12 @@ def train():
     df.fillna(0, inplace=True)
     
     # Separate features and labels
-    if 'Label' not in df.columns:
-        print("Missing 'Label' column in dataset.")
+    if 'phishing' not in df.columns:
+        print("Missing 'phishing' column in dataset.")
         return
         
-    y = df['Label']
-    X = df.drop(columns=['Label'])
+    y = df['phishing']
+    X = df.drop(columns=['phishing'])
     
     # Save exact feature names and order
     feature_names = list(X.columns)
@@ -51,7 +51,7 @@ def train():
 
     # Optionally, we can save the test set for the evaluate_model.py script to use exactly
     test_data = X_test.copy()
-    test_data['Label'] = y_test
+    test_data['phishing'] = y_test
     test_data.to_csv(ML_DIR / "datasets" / "test_split.csv", index=False)
     print("Test split saved for evaluation.")
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import scan
+from app.api import scan, capture, scan_image, scan_full
 
 app = FastAPI(title="Phishing URL Detector API")
 
@@ -14,6 +14,9 @@ app.add_middleware(
 )
 
 app.include_router(scan.router)
+app.include_router(capture.router)
+app.include_router(scan_image.router)
+app.include_router(scan_full.router)
 
 @app.get("/")
 def read_root():

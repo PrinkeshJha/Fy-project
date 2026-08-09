@@ -7,6 +7,15 @@ from typing import Dict, List, Tuple
 from urllib.parse import urlparse
 import tldextract
 import whois
+import sys
+import os
+
+# Add the backend root directory to the python path to import Feature.py
+backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
+
+from Feature import extract_features as extract_all_features
 
 SUSPICIOUS_KEYWORDS = ["login", "verify", "bank", "secure", "account", "signin", "update", "confirm", "paypal", "amazon", "microsoft"]
 SPECIAL_CHARS_PATTERN = re.compile(r'[@\?=\_%&]')
@@ -147,20 +156,6 @@ def extract_features(url: str) -> Tuple[Dict[str, float], List[str]]:
     if suspicious_keywords > 0:
         reasons.append(f"URL contains {suspicious_keywords} suspicious keyword(s)")
 
-    feature_vector = {
-        "url_length": float(url_length),
-        "dots": float(dots),
-        "hyphens": float(hyphens),
-        "digits": float(digits),
-        "special_chars": float(special_chars),
-        "contains_ip": float(contains_ip),
-        "contains_at": float(contains_at),
-        "https": float(https),
-        "entropy": float(entropy),
-        "subdomains": float(subdomains),
-        "domain_age": float(domain_age),
-        "ssl_valid": float(ssl_valid),
-        "suspicious_keywords": float(suspicious_keywords),
-    }
+    feature_vector = extract_all_features(url)
     
     return feature_vector, reasons

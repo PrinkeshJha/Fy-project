@@ -7,3 +7,8 @@ python-whois==0.8.0
 tldextract==5.1.2
 pytest==8.2.0
 joblib==1.4.2
+
+playwright
+tensorflow
+Pillow
+numpy
